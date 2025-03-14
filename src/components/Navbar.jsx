@@ -5,51 +5,23 @@ import { FaUser, FaCog } from 'react-icons/fa';
 
 const NavContainer = styled.nav`
   position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(180deg, rgba(32, 32, 35, 0.95), rgba(22, 22, 25, 0.95));
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(128, 128, 255, 0.2);
-  border-radius: 30px;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
-  gap: 2rem;
+  justify-content: space-between;
   z-index: 1000;
-  box-shadow: 0 0 30px rgba(128, 128, 255, 0.15);
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      linear-gradient(90deg, transparent 0%, rgba(128, 128, 255, 0.1) 50%, transparent 100%),
-      linear-gradient(rgba(32, 32, 35, 0.5) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(32, 32, 35, 0.5) 1px, transparent 1px);
-    background-size: 200% 100%, 20px 20px, 20px 20px;
-    mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-    animation: shine 8s linear infinite;
-    pointer-events: none;
-  }
-
-  @keyframes shine {
-    to {
-      background-position: -200% 0, 0 0, 0 0;
-    }
-  }
+  border-bottom: 1px solid rgba(0, 100, 255, 0.2);
 
   @media (max-width: 768px) {
-    width: 90%;
     padding: 1rem;
-    gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 1rem;
   }
 `;
 
