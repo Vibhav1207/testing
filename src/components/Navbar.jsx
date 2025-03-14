@@ -33,10 +33,10 @@ const Logo = styled.div`
   font-size: 1.8rem;
   font-weight: bold;
   font-family: 'Orbitron', sans-serif;
-  background: linear-gradient(45deg, #e0e0ff, #8080ff);
+  background: linear-gradient(45deg, #ffffff, #cccccc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 15px rgba(128, 128, 255, 0.7);
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
   letter-spacing: 1px;
   position: relative;
 
@@ -47,7 +47,7 @@ const Logo = styled.div`
     left: 50%;
     width: 150%;
     height: 100%;
-    background: radial-gradient(circle, rgba(128, 128, 255, 0.2) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
     transform: translate(-50%, -50%);
     pointer-events: none;
   }
@@ -74,13 +74,13 @@ const NavLink = styled(motion.a)`
   position: relative;
   
   &.active {
-    background: rgba(0, 100, 255, 0.2);
-    box-shadow: 0 0 10px rgba(0, 100, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   }
 
   &:hover {
-    color: #0066ff;
-    text-shadow: 0 0 5px rgba(0, 100, 255, 0.5);
+    color: #ffffff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
   }
 `;
 
@@ -93,12 +93,12 @@ const Avatar = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: linear-gradient(45deg, #0066ff, #00ffff);
+  background: linear-gradient(45deg, #333333, #666666);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  box-shadow: 0 0 10px rgba(0, 100, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 `;
 
 const ButtonGroup = styled.div`
@@ -114,7 +114,7 @@ const ButtonGroup = styled.div`
 const AuthButton = styled.button`
   padding: 0.5rem 1.5rem;
   border-radius: 20px;
-  border: 1px solid rgba(0, 100, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   background: transparent;
   color: white;
   cursor: pointer;
@@ -122,9 +122,9 @@ const AuthButton = styled.button`
   transition: all 0.3s ease;
 
   &:hover {
-    background: rgba(0, 100, 255, 0.2);
-    border-color: rgba(0, 100, 255, 0.4);
-    box-shadow: 0 0 15px rgba(0, 100, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px);
   }
 
@@ -138,12 +138,18 @@ const Dropdown = styled(motion.div)`
   top: 100%;
   right: 0;
   margin-top: 0.5rem;
-  background: rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(0, 100, 255, 0.3);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   padding: 0.5rem;
   min-width: 150px;
-  box-shadow: 0 0 20px rgba(0, 100, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 `;
 
 const DropdownItem = styled(motion.div)`
@@ -155,7 +161,7 @@ const DropdownItem = styled(motion.div)`
   border-radius: 5px;
   
   &:hover {
-    background: rgba(0, 100, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
   }
 `;
 
