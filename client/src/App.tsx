@@ -8,6 +8,7 @@ import Login from "@/pages/login";
 import Signup from "@/pages/signup";
 import Dashboard from "@/pages/dashboard";
 import PricingPage from "@/pages/pricing-page";
+import Files from "@/pages/files";
 
 function Router() {
   return (
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/signup" component={Signup} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/pricing" component={PricingPage} />
+      <Route path="/files" component={Files} />
       <Route component={NotFound} />
     </Switch>
   );
