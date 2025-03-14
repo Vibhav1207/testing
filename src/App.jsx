@@ -1,10 +1,15 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Features from './components/Features';
 import Subscription from './components/Subscription';
+import Footer from './components/Footer';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -44,12 +49,25 @@ const AppContainer = styled.div`
 
 function App() {
   return (
-    <AppContainer>
-      <Navbar />
-      <Hero />
-      <Features />
-      <Subscription />
-    </AppContainer>
+    <Router>
+      <AuthProvider>
+        <AppContainer>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={
+              <>
+                <Hero />
+                <Features />
+                <Subscription />
+              </>
+            } />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          </Routes>
+          <Footer />
+        </AppContainer>
+      </AuthProvider>
+    </Router>
   );
 }
 

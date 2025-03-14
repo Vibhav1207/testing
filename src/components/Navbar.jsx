@@ -166,61 +166,46 @@ const DropdownItem = styled(motion.div)`
 `;
 
 function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const { isAuthenticated, user, logout } = useAuth();
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   return (
     <NavContainer>
       <Logo>EternaVaultX</Logo>
       <NavLinks>
-        <NavLink href="#" className="active">Home</NavLink>
-        <NavLink href="#">Features</NavLink>
-        <NavLink href="#">Pricing</NavLink>
-        <NavLink href="#">About</NavLink>
+        <NavLink href="#" whileHover={{ scale: 1.05 }}>Features</NavLink>
+        <NavLink href="#" whileHover={{ scale: 1.05 }}>Pricing</NavLink>
+        <NavLink href="#" whileHover={{ scale: 1.05 }}>Contact</NavLink>
+        {!isAuthenticated ? (
+          <>
+            <NavLink href="/login" whileHover={{ scale: 1.05 }}>Login</NavLink>
+            <NavLink href="/signup" whileHover={{ scale: 1.05 }}>Sign Up</NavLink>
+          </>
+        ) : (
+          <ProfileSection>
+            <Avatar onClick={() => setShowProfileMenu(!showProfileMenu)}>
+              {user?.username?.[0]?.toUpperCase() || <FaUser />}
+            </Avatar>
+            {showProfileMenu && (
+              <ProfileMenu
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+              >
+                <MenuItem href="/profile">
+                  <FaUser /> Profile
+                </MenuItem>
+                <MenuItem href="/settings">
+                  <FaCog /> Settings
+                </MenuItem>
+                <MenuItem href="#" onClick={logout}>
+                  <FaSignOutAlt /> Logout
+                </MenuItem>
+              </ProfileMenu>
+            )}
+          </ProfileSection>
+        )}
       </NavLinks>
-      <ButtonGroup>
-        <AuthButton
-          as={motion.button}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Login
-        </AuthButton>
-        <AuthButton
-          as={motion.button}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          style={{
-            background: 'rgba(0, 100, 255, 0.2)',
-            borderColor: 'rgba(0, 100, 255, 0.4)'
-          }}
-        >
-          Sign Up
-        </AuthButton>
-      </ButtonGroup>
-      {isLoggedIn && (
-        <ProfileSection
-          onHoverStart={() => setShowDropdown(true)}
-          onHoverEnd={() => setShowDropdown(false)}
-        >
-          <Avatar>
-            <FaUser />
-          </Avatar>
-          {showDropdown && (
-            <Dropdown
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-            >
-              <DropdownItem>
-                <FaCog />
-                Settings
-              </DropdownItem>
-            </Dropdown>
-          )}
-        </ProfileSection>
-      )}
     </NavContainer>
   );
 };
