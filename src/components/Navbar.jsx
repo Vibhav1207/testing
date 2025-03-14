@@ -8,16 +8,41 @@ const NavContainer = styled.nav`
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 100, 255, 0.3);
+  background: linear-gradient(180deg, rgba(32, 32, 35, 0.95), rgba(22, 22, 25, 0.95));
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(128, 128, 255, 0.2);
   border-radius: 30px;
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
   gap: 2rem;
   z-index: 1000;
-  box-shadow: 0 0 20px rgba(0, 100, 255, 0.2);
+  box-shadow: 0 0 30px rgba(128, 128, 255, 0.15);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      linear-gradient(90deg, transparent 0%, rgba(128, 128, 255, 0.1) 50%, transparent 100%),
+      linear-gradient(rgba(32, 32, 35, 0.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(32, 32, 35, 0.5) 1px, transparent 1px);
+    background-size: 200% 100%, 20px 20px, 20px 20px;
+    mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+    animation: shine 8s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes shine {
+    to {
+      background-position: -200% 0, 0 0, 0 0;
+    }
+  }
 
   @media (max-width: 768px) {
     width: 90%;
@@ -29,12 +54,27 @@ const NavContainer = styled.nav`
 `;
 
 const Logo = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  background: linear-gradient(45deg, #fff, #0066ff);
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(45deg, #e0e0ff, #8080ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 10px rgba(0, 100, 255, 0.5);
+  text-shadow: 0 0 15px rgba(128, 128, 255, 0.7);
+  letter-spacing: 1px;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(128, 128, 255, 0.2) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
 `;
 
 const NavLinks = styled.div`
@@ -150,7 +190,7 @@ function Navbar() {
 
   return (
     <NavContainer>
-      <Logo>LOGO</Logo>
+      <Logo>EternaVaultX</Logo>
       <NavLinks>
         <NavLink href="#" className="active">Home</NavLink>
         <NavLink href="#">Features</NavLink>
