@@ -145,6 +145,8 @@ const DropdownItem = styled(motion.div)`
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   return (
     <NavContainer>
