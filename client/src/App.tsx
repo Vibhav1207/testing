@@ -9,6 +9,7 @@ import Signup from "@/pages/signup";
 import Dashboard from "@/pages/dashboard";
 import PricingPage from "@/pages/pricing-page";
 import Files from "@/pages/files";
+import About from "@/pages/about";
 
 function Router() {
   return (
@@ -19,6 +20,7 @@ function Router() {
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/pricing" component={PricingPage} />
       <Route path="/files" component={Files} />
+      <Route path="/about" component={About} />
       <Route component={NotFound} />
     </Switch>
   );
