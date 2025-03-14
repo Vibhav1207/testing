@@ -1,0 +1,40 @@
+"Ensure the Dashboard page follows the same black, blue, and white neon theme and is fully responsive. This page should only be accessible if a user is logged in. If a non-logged-in user tries to access it, display a neon-styled message prompting them to log in first."
+
+Access Control & Navbar Updates:
+If the user is not logged in, display a full-screen neon message:
+"Please log in to use the Dashboard."
+Below the message, add a glowing Login button. Clicking it redirects to the Login page.
+If the user is logged in, open the Dashboard page:
+The "Dashboard" tab in the navbar should glow to indicate the active page (same for the Home page).
+Navbar remains the same as on the home page but now includes a profile icon with hover settings dropdown.
+Dashboard Background & Responsiveness:
+Continue the square grid background effect from the home page.
+Ensure the grid is visible on both desktop and mobile screens.
+The neon halogen light effect on the left and right sides of the page should remain.
+Dashboard Sections (All Cards with Futuristic Animations & Hover Effects):
+1) File Upload & Encryption Card:
+A glowing neon card where users can browse and upload files (.pdf, .jpg, etc.).
+Options to select:
+File Selection (Choose file button).
+Unlock Date Selection (Calendar input).
+After selection, show the uploaded file below the selection area.
+Add a button labeled "Upload & Encrypt" (For now, this button does nothing, as backend will be handled later).
+Ensure a smooth opening animation when the card appears.
+2) Storage Overview Card:
+Show total storage used vs. available (e.g., 4GB/5GB for the Free Plan).
+Display a glowing progress bar representing storage usage.
+Add an animated hover effect when interacting with this section.
+3) User Subscription Plan Card:
+Display current plan details (e.g., Free Plan - 5GB Storage).
+For testing purposes, allow switching between plans manually to see if the storage overview updates accordingly.
+After testing, remove manual plan switching for real users.
+4) Recent Activity Card (Large Card with Animations):
+List of recently uploaded files with:
+File type logo on the left (PDF, JPG, etc.).
+File name and format (e.g., "Document1.pdf").
+Date uploaded.
+Time remaining to unlock, displayed inside a long glowing oval with a lock icon.
+Add smooth animations for listing new files.
+Footer:
+Same as the Home page, with Terms & Conditions, Contact, etc.
+This Dashboard page will have a futuristic, sleek, and user-friendly feel while keeping it responsive and visually appealing. 🚀
