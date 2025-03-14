@@ -111,26 +111,38 @@ const DropdownItem = styled(motion.div)`
   }
 `;
 
-const Navbar = () => {
-  const [isLoggedIn] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
+function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <NavContainer>
-      <Logo>EternaVaultX</Logo>
+      <Logo>LOGO</Logo>
       <NavLinks>
         <NavLink href="#" className="active">Home</NavLink>
-        <NavLink href="#">Dashboard</NavLink>
-        <NavLink href="#">My Files</NavLink>
-        <NavLink href="#">About</NavLink>
+        <NavLink href="#">Features</NavLink>
         <NavLink href="#">Pricing</NavLink>
-        {!isLoggedIn && (
-          <>
-            <NavLink href="#">Login</NavLink>
-            <NavLink href="#">Signup</NavLink>
-          </>
-        )}
+        <NavLink href="#">About</NavLink>
       </NavLinks>
+      <ButtonGroup>
+        <AuthButton
+          as={motion.button}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Login
+        </AuthButton>
+        <AuthButton
+          as={motion.button}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          style={{
+            background: 'rgba(0, 100, 255, 0.2)',
+            borderColor: 'rgba(0, 100, 255, 0.4)'
+          }}
+        >
+          Sign Up
+        </AuthButton>
+      </ButtonGroup>
       {isLoggedIn && (
         <ProfileSection
           onHoverStart={() => setShowDropdown(true)}

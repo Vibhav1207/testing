@@ -8,7 +8,7 @@ import Subscription from './components/Subscription';
 
 const AppContainer = styled.div`
   min-height: 100vh;
-  background-color: black;
+  background-color: #000000;
   color: white;
   position: relative;
   overflow-x: hidden;
@@ -21,11 +21,12 @@ const AppContainer = styled.div`
     right: 0;
     bottom: 0;
     background: 
-      linear-gradient(transparent 0%, rgba(0, 0, 255, 0.1) 50%, transparent 100%),
-      linear-gradient(90deg, transparent 0%, rgba(0, 0, 255, 0.1) 50%, transparent 100%),
-      linear-gradient(rgba(0, 0, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 0, 255, 0.05) 1px, transparent 1px);
-    background-size: 100% 100%, 100% 100%, 20px 20px, 20px 20px;
+      radial-gradient(circle at center, rgba(0, 100, 255, 0.2) 0%, transparent 70%),
+      linear-gradient(transparent 0%, rgba(0, 100, 255, 0.15) 50%, transparent 100%),
+      linear-gradient(90deg, transparent 0%, rgba(0, 100, 255, 0.15) 50%, transparent 100%),
+      linear-gradient(rgba(0, 100, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 100, 255, 0.1) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 20px 20px, 20px 20px;
     pointer-events: none;
     z-index: 1;
   }
