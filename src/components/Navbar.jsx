@@ -85,6 +85,38 @@ const Avatar = styled.div`
   box-shadow: 0 0 10px rgba(0, 100, 255, 0.5);
 `;
 
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+  }
+`;
+
+const AuthButton = styled.button`
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 100, 255, 0.2);
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(0, 100, 255, 0.2);
+    border-color: rgba(0, 100, 255, 0.4);
+    box-shadow: 0 0 15px rgba(0, 100, 255, 0.3);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+`;
+
 const Dropdown = styled(motion.div)`
   position: absolute;
   top: 100%;
