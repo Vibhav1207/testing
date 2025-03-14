@@ -1,0 +1,20 @@
+// Simple build script for Vercel
+import { build } from 'vite';
+
+async function buildApp() {
+  try {
+    await build({
+      root: '.',
+      build: {
+        outDir: 'dist',
+        emptyOutDir: true,
+      },
+    });
+    console.log('Build completed successfully');
+  } catch (error) {
+    console.error('Build failed:', error);
+    process.exit(1);
+  }
+}
+
+buildApp();
