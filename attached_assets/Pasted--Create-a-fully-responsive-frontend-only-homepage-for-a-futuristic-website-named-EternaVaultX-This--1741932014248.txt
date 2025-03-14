@@ -1,0 +1,64 @@
+"Create a fully responsive frontend-only homepage for a futuristic website named EternaVaultX. This is for testing purposes, so temporarily add a test login system with a sample username and password (actual backend will be implemented later). The design should follow a black, blue, and white neon theme with smooth animations and modern UI elements."
+
+Navbar:
+A rounded border navbar at the top center of the screen with a neon animation effect.
+The navbar should include Home (active), Dashboard, My Files, About, Login, Signup, and Pricing.
+On the left side, add the website logo and name (EternaVaultX).
+When a user logs in, replace Login/Signup with a profile section (circular avatar). Hovering over it should show a dropdown with a Settings option (functionality will be added later).
+Background & Design:
+The background should have a subtle square grid pattern.
+A neon halogen light effect should run vertically along both left and right edges, slightly dimming toward the center.
+The center of the screen should have a glowing neon effect, making the grid more visible.
+Hero Section:
+The center of the page should feature the website name (EternaVaultX) in a futuristic, glowing font.
+Below it, add a short paragraph about the website, styled with a subtle scrolling text effect.
+Features Section:
+Below the hero section, create cards showcasing different features.
+The cards should be interactive, with smooth hover animations and neon glowing borders.
+Ensure the layout is responsive (e.g., grid-based with dynamic resizing).
+Subscription Model Section:
+Below the features, add a subscription section displaying different plans.
+Each plan should be inside a glowing neon-bordered box with a hover effect.
+Include a call-to-action button (styled in blue neon with white text).
+Temporary Test Login System:
+For testing purposes, add a temporary login system that allows users to enter:
+Username: testuser
+Password: password123
+This should allow navigation as if logged in (with Login/Signup changing to a profile avatar).
+Footer:
+The footer should contain Terms & Conditions, Contact Us, and other relevant links.
+The design should match the neon futuristic theme, with a subtle glow effect around the edges.
+Ensure all elements are fully responsive. Animations will be handled separately.
+
+Next: Login & Signup Page
+Prompt for Login & Signup Page:
+
+"Create a futuristic, neon-themed login and signup page for EternaVaultX. This is for frontend testing only, so no backend is required. The login page should allow users to enter their credentials and, if successful, simulate a login state where they are redirected to the homepage (using the test login system from the homepage prompt). The design should be sleek, modern, and fully responsive."
+
+Login Page:
+A dark, neon-glowing UI with a centered login box.
+The login box should have a glowing blue border and a subtle hover effect.
+Input fields should have a smooth glow when selected.
+Include fields for:
+Username
+Password
+Login button (glowing blue, white text)
+Forgot Password link (neon animation on hover)
+If the login is successful (checking against testuser and password123), simulate a login by redirecting to the homepage with navbar changes.
+Signup Page:
+A similar neon-glowing UI but for new users.
+Signup form should include:
+Full Name
+Email
+Username
+Password
+Confirm Password
+Signup button (same neon glow effect as login button)
+Below the form, a "Already have an account? Login here" link that switches to the login page.
+Design Features:
+The background should have the same square grid and neon lighting effects as the homepage.
+The forms should appear slightly floating with a glassmorphism effect (blurred background).
+Buttons should have a hover glow effect.
+The UI must be fully responsive on all devices.
+Ensure all elements are futuristic, sleek, and match the overall theme of EternaVaultX.
+
