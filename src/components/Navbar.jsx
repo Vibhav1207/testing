@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { FaUser, FaCog } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const NavContainer = styled.nav`
   position: fixed;
@@ -160,6 +161,7 @@ const DropdownItem = styled(motion.div)`
 `;
 
 function Navbar() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -178,6 +180,7 @@ function Navbar() {
           as={motion.button}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => navigate('/login')}
         >
           Login
         </AuthButton>
@@ -185,6 +188,7 @@ function Navbar() {
           as={motion.button}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => navigate('/signup')}
           style={{
             background: 'rgba(0, 100, 255, 0.2)',
             borderColor: 'rgba(0, 100, 255, 0.4)'
