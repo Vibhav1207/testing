@@ -121,7 +121,9 @@ const Login = () => {
   const [error, setError] = useState('');
   const { login } = useAuth();
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -130,11 +132,10 @@ const Login = () => {
       return;
     }
 
-    const success = login(username, password);
-    if (!success) {
-      setError('Invalid credentials');
+    const result = login(username, password);
+    if (!result.success) {
+      setError(result.error || 'Invalid credentials');
     } else {
-      const navigate = useNavigate();
       navigate('/');
     }
   };

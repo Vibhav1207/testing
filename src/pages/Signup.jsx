@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -131,6 +132,9 @@ const Signup = () => {
     });
   };
 
+  const navigate = useNavigate();
+  const { signup } = useAuth();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
@@ -147,11 +151,18 @@ const Signup = () => {
       return;
     }
 
-    // For demo purposes, we'll consider the signup successful
-    // In a real application, you would make an API call here
-    const navigate = useNavigate();
-    navigate('/login');
-    console.log('Signup form submitted:', formData);
+    const result = signup({
+      fullName,
+      email,
+      username,
+      password
+    });
+
+    if (result.success) {
+      navigate('/login');
+    } else {
+      setError(result.error || 'Failed to create account');
+    }
   };
 
   return (
