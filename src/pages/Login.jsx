@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Notification from '../components/Notification';
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -119,6 +120,7 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [notification, setNotification] = useState('');
   const { login } = useAuth();
 
   const navigate = useNavigate();
@@ -136,12 +138,22 @@ const Login = () => {
     if (!result.success) {
       setError(result.error || 'Invalid credentials');
     } else {
-      navigate('/');
+      setNotification('Successfully logged in!');
+      setTimeout(() => {
+        navigate('/');
+      }, 1500);
     }
   };
 
   return (
     <PageContainer>
+      {notification && (
+        <Notification
+          message={notification}
+          type="success"
+          onClose={() => setNotification('')}
+        />
+      )}
       <LoginBox
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

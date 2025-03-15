@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Notification from '../components/Notification';
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -124,6 +125,7 @@ const Signup = () => {
     confirmPassword: ''
   });
   const [error, setError] = useState('');
+  const [notification, setNotification] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -159,7 +161,10 @@ const Signup = () => {
     });
 
     if (result.success) {
-      navigate('/login');
+      setNotification('Account created successfully! Redirecting to login...');
+      setTimeout(() => {
+        navigate('/login');
+      }, 1500);
     } else {
       setError(result.error || 'Failed to create account');
     }
@@ -167,6 +172,13 @@ const Signup = () => {
 
   return (
     <PageContainer>
+      {notification && (
+        <Notification
+          message={notification}
+          type="success"
+          onClose={() => setNotification('')}
+        />
+      )}
       <SignupBox
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

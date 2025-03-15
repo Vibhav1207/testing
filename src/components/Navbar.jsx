@@ -162,8 +162,7 @@ const DropdownItem = styled(motion.div)`
 
 function Navbar() {
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isAuthenticated, user, logout } = useAuth();
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
@@ -175,35 +174,36 @@ function Navbar() {
         <NavLink href="#">Pricing</NavLink>
         <NavLink href="#">About</NavLink>
       </NavLinks>
-      <ButtonGroup>
-        <AuthButton
-          as={motion.button}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => navigate('/login')}
-        >
-          Login
-        </AuthButton>
-        <AuthButton
-          as={motion.button}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => navigate('/signup')}
-          style={{
-            background: 'rgba(0, 100, 255, 0.2)',
-            borderColor: 'rgba(0, 100, 255, 0.4)'
-          }}
-        >
-          Sign Up
-        </AuthButton>
-      </ButtonGroup>
-      {isLoggedIn && (
+      {!isAuthenticated ? (
+        <ButtonGroup>
+          <AuthButton
+            as={motion.button}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => navigate('/login')}
+          >
+            Login
+          </AuthButton>
+          <AuthButton
+            as={motion.button}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => navigate('/signup')}
+            style={{
+              background: 'rgba(0, 100, 255, 0.2)',
+              borderColor: 'rgba(0, 100, 255, 0.4)'
+            }}
+          >
+            Sign Up
+          </AuthButton>
+        </ButtonGroup>
+      ) : (
         <ProfileSection
-          onHoverStart={() => setShowDropdown(true)}
-          onHoverEnd={() => setShowDropdown(false)}
+          onClick={() => setShowDropdown(!showDropdown)}
+          whileHover={{ scale: 1.05 }}
         >
           <Avatar>
-            <FaUser />
+            {user?.username?.charAt(0).toUpperCase() || <FaUser />}
           </Avatar>
           {showDropdown && (
             <Dropdown
@@ -211,9 +211,20 @@ function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
             >
-              <DropdownItem>
-                <FaCog />
-                Settings
+              <DropdownItem
+                whileHover={{ x: 5 }}
+                onClick={() => navigate('/settings')}
+              >
+                <FaCog /> Settings
+              </DropdownItem>
+              <DropdownItem
+                whileHover={{ x: 5 }}
+                onClick={() => {
+                  logout();
+                  navigate('/');
+                }}
+              >
+                Sign Out
               </DropdownItem>
             </Dropdown>
           )}
