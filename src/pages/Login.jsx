@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const PageContainer = styled.div`
@@ -133,7 +134,8 @@ const Login = () => {
     if (!success) {
       setError('Invalid credentials');
     } else {
-      window.location.href = '/';
+      const navigate = useNavigate();
+      navigate('/');
     }
   };
 
@@ -171,8 +173,8 @@ const Login = () => {
             Login
           </Button>
         </Form>
-        <Link href="#" whileHover={{ x: 5 }}>Forgot Password?</Link>
-        <Link href="/signup" whileHover={{ x: 5 }}>Don't have an account? Sign up</Link>
+        <Link as="a" onClick={() => {}} whileHover={{ x: 5 }}>Forgot Password?</Link>
+        <Link as="a" onClick={() => navigate('/signup')} whileHover={{ x: 5 }}>Don't have an account? Sign up</Link>
       </LoginBox>
     </PageContainer>
   );
