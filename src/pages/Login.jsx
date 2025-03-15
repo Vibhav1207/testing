@@ -19,7 +19,7 @@ const LoginBox = styled(motion.div)`
   max-width: 400px;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 100, 255, 0.3);
+  border: 1px solid rgba(243, 134, 9, 0.91);
   border-radius: 20px;
   padding: 2.5rem;
   box-shadow: 0 0 30px rgba(0, 100, 255, 0.2);
