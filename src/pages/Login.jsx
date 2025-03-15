@@ -132,6 +132,8 @@ const Login = () => {
     const success = login(username, password);
     if (!success) {
       setError('Invalid credentials');
+    } else {
+      window.location.href = '/';
     }
   };
 

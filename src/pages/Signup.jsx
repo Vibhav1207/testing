@@ -146,7 +146,9 @@ const Signup = () => {
       return;
     }
 
-    // Here you would typically handle the signup process
+    // For demo purposes, we'll consider the signup successful
+    // In a real application, you would make an API call here
+    window.location.href = '/login';
     console.log('Signup form submitted:', formData);
   };
 
