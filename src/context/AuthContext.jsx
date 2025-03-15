@@ -23,6 +23,20 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (username, password) => {
+    // Test user credentials
+    if (username === 'testuser' && password === 'password123') {
+      const testUserData = {
+        id: 'test-user-id',
+        username: 'testuser',
+        email: 'test@example.com',
+        fullName: 'Test User'
+      };
+      setIsAuthenticated(true);
+      setUser(testUserData);
+      localStorage.setItem('user', JSON.stringify(testUserData));
+      return { success: true };
+    }
+
     // In a real app, this would be an API call
     const mockUsers = JSON.parse(localStorage.getItem('users') || '[]');
     const user = mockUsers.find(u => u.username === username);
