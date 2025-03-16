@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const SubscriptionSection = styled.section`
   padding: 4rem 2rem;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 20, 40, 0.9);
   position: relative;
   overflow: hidden;
 
@@ -15,8 +15,8 @@ const SubscriptionSection = styled.section`
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: linear-gradient(rgba(255, 80, 0, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 80, 0, 0.1) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(0, 100, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 100, 255, 0.1) 1px, transparent 1px);
     background-size: 30px 30px;
     opacity: 0.5;
     pointer-events: none;
@@ -107,6 +107,25 @@ const PlanFeatures = styled.ul`
   li {
     margin: 0.8rem 0;
     color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &::before {
+      content: '✓';
+      display: inline-block;
+      color: #00ff88;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.7);
+      transform: scale(1.2);
+      animation: tickPulse 2s infinite;
+    }
+  }
+
+  @keyframes tickPulse {
+    0% { opacity: 0.7; transform: scale(1.2); }
+    50% { opacity: 1; transform: scale(1.4); }
+    100% { opacity: 0.7; transform: scale(1.2); }
   }
 `;
 
