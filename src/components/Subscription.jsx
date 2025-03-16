@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 const SubscriptionSection = styled.section`
   padding: 4rem 2rem;
   background: rgba(0, 20, 40, 0.9);
+  border: 1px solid rgba(0, 100, 255, 0.3);
   position: relative;
   overflow: hidden;
 
