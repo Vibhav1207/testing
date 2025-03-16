@@ -13,9 +13,29 @@ const FooterContainer = styled.footer`
     top: 0;
     left: 0;
     right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #00f, transparent);
-    box-shadow: 0 0 15px rgba(0, 100, 255, 0.5);
+    bottom: 0;
+    background-image: linear-gradient(rgba(255, 80, 0, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 80, 0, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: 0.3;
+    pointer-events: none;
+    animation: gridFloat 20s linear infinite;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ff4d00, transparent);
+    box-shadow: 0 0 15px rgba(255, 80, 0, 0.7);
+  }
+
+  @keyframes gridFloat {
+    0% { background-position: 0 0; }
+    100% { background-position: 30px 30px; }
   }
 `;
 
@@ -74,18 +94,43 @@ const SocialIcons = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: rgba(0, 100, 255, 0.1);
+    background: rgba(255, 80, 0, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-    border: 1px solid rgba(0, 100, 255, 0.3);
+    border: 1px solid rgba(255, 80, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff4d00, transparent, #ff8533);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
 
     &:hover {
-      background: rgba(0, 100, 255, 0.2);
-      border-color: rgba(0, 100, 255, 0.5);
+      background: rgba(255, 80, 0, 0.2);
+      border-color: rgba(255, 80, 0, 0.5);
       transform: translateY(-2px);
-      box-shadow: 0 0 15px rgba(0, 100, 255, 0.3);
+      box-shadow: 0 0 15px rgba(255, 80, 0, 0.3);
+
+      &::before {
+        opacity: 1;
+        animation: borderGlow 2s ease-in-out infinite;
+      }
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
     }
   }
 `;

@@ -5,16 +5,38 @@ import { motion } from 'framer-motion';
 const SubscriptionSection = styled.section`
   padding: 4rem 2rem;
   background: rgba(0, 0, 0, 0.8);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(rgba(255, 80, 0, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 80, 0, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: 0.5;
+    pointer-events: none;
+    animation: gridFloat 20s linear infinite;
+  }
+
+  @keyframes gridFloat {
+    0% { background-position: 0 0; }
+    100% { background-position: 30px 30px; }
+  }
 `;
 
 const SectionTitle = styled.h2`
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 3rem;
-  background: linear-gradient(90deg, #fff, #00f, #fff);
+  background: linear-gradient(90deg, #fff, #ff4d00, #fff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(0, 100, 255, 0.5);
+  text-shadow: 0 0 20px rgba(255, 80, 0, 0.5);
 `;
 
 const PlansContainer = styled.div`
@@ -42,11 +64,12 @@ const PlanCard = styled(motion.div)`
     left: -2px;
     right: -2px;
     bottom: -2px;
-    background: linear-gradient(45deg, #00f, #0ff);
+    background: linear-gradient(45deg, #ff4d00, #ff8533);
     border-radius: 15px;
     z-index: -1;
     opacity: 0.7;
     transition: opacity 0.3s ease;
+    animation: borderGlow 2s ease-in-out infinite;
   }
 
   &:hover {
@@ -68,7 +91,7 @@ const PlanPrice = styled.div`
   font-weight: bold;
   margin: 1rem 0;
   color: #fff;
-  text-shadow: 0 0 10px rgba(0, 100, 255, 0.5);
+  text-shadow: 0 0 10px rgba(255, 80, 0, 0.5);
 
   span {
     font-size: 1rem;
@@ -88,7 +111,7 @@ const PlanFeatures = styled.ul`
 `;
 
 const CTAButton = styled.button`
-  background: linear-gradient(90deg, #00f, #0066ff);
+  background: linear-gradient(90deg, #ff4d00, #ff8533);
   color: white;
   border: none;
   padding: 1rem 2rem;
@@ -96,11 +119,32 @@ const CTAButton = styled.button`
   font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(0, 100, 255, 0.5);
+  box-shadow: 0 0 15px rgba(255, 80, 0, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #ff4d00, transparent, #ff8533);
+    z-index: -1;
+    animation: borderGlow 2s ease-in-out infinite;
+  }
 
   &:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(0, 100, 255, 0.7);
+    box-shadow: 0 0 20px rgba(255, 80, 0, 0.7);
+  }
+
+  @keyframes borderGlow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
   }
 `;
 
