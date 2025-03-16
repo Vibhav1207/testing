@@ -144,15 +144,24 @@ const DropdownItem = styled.a`
   }
 `;
 
-const Navbar = ({ isLoggedIn, setShowAuth }) => {
+const Navbar = ({ isLoggedIn, setShowAuth, username = 'John Doe' }) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleLogout = () => {
+    // Add your logout logic here
     window.location.href = '/';
   };
 
   const handleAuthClick = () => {
     setShowAuth(true);
+  };
+
+  const getInitials = (name) => {
+    return name
+      .split(' ')
+      .map(part => part[0])
+      .join('')
+      .toUpperCase();
   };
 
   return (
@@ -163,27 +172,33 @@ const Navbar = ({ isLoggedIn, setShowAuth }) => {
       </Logo>
 
       <NavLinks>
-        <NavLink href="#" className="active">Home</NavLink>
-        <NavLink href="#">Dashboard</NavLink>
-        <NavLink href="#">My Files</NavLink>
-        <NavLink href="#">About</NavLink>
-        <NavLink href="#">Pricing</NavLink>
+        <NavLink href="/" className={window.location.pathname === '/' ? 'active' : ''}>Home</NavLink>
+        {isLoggedIn && (
+          <>
+            <NavLink href="/dashboard" className={window.location.pathname === '/dashboard' ? 'active' : ''}>Dashboard</NavLink>
+            <NavLink href="/files" className={window.location.pathname === '/files' ? 'active' : ''}>My Files</NavLink>
+          </>
+        )}
+        <NavLink href="/about" className={window.location.pathname === '/about' ? 'active' : ''}>About</NavLink>
+        <NavLink href="/pricing" className={window.location.pathname === '/pricing' ? 'active' : ''}>Pricing</NavLink>
       </NavLinks>
 
       {isLoggedIn ? (
         <ProfileSection>
           <Avatar
             onClick={() => setShowDropdown(!showDropdown)}
+            onMouseEnter={() => setShowDropdown(true)}
           >
-            JD
+            {getInitials(username)}
           </Avatar>
           {showDropdown && (
             <Dropdown
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
+              onMouseLeave={() => setShowDropdown(false)}
             >
-              <DropdownItem href="#">Settings</DropdownItem>
+              <DropdownItem href="/settings">Settings</DropdownItem>
               <DropdownItem href="#" onClick={handleLogout}>Logout</DropdownItem>
             </Dropdown>
           )}
