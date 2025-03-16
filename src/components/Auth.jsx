@@ -166,7 +166,7 @@ const ErrorMessage = styled(motion.div)`
   text-align: center;
 `;
 
-const Auth = () => {
+const Auth = ({ setShowAuth, onLogin }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
@@ -192,7 +192,7 @@ const Auth = () => {
       // Test login logic
       if (formData.username === 'testuser' && formData.password === 'password123') {
         // Simulate successful login
-        window.location.href = '/';
+        onLogin({ username: formData.username });
       } else {
         setError('Invalid username or password');
       }

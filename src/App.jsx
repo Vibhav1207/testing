@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Features from './components/Features';
 import Navbar from './components/Navbar';
 import Subscription from './components/Subscription';
 import Footer from './components/Footer';
 import Auth from './components/Auth';
+import Dashboard from './components/Dashboard';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const ModalOverlay = styled(motion.div)`
   position: fixed;
@@ -120,60 +123,64 @@ const HeroSection = styled(motion.div)`
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
+  const [username, setUsername] = useState('');
+
+  const handleLogin = (user) => {
+    setIsLoggedIn(true);
+    setUsername(user.username);
+    setShowAuth(false);
+  };
 
   return (
-    <AppContainer>
-      <GridBackground />
-      <Navbar isLoggedIn={isLoggedIn} setShowAuth={setShowAuth}>
-        <Logo>EternaVaultX</Logo>
-        <NavLinks>
-          <NavLink href="#" className="active">Home</NavLink>
-          <NavLink href="#">Dashboard</NavLink>
-          <NavLink href="#">My Files</NavLink>
-          <NavLink href="#">About</NavLink>
-          <NavLink href="#">Pricing</NavLink>
-          {!isLoggedIn ? (
-            <>
-              <NavLink href="#">Login</NavLink>
-              <NavLink href="#">Signup</NavLink>
-            </>
-          ) : (
-            <NavLink href="#" style={{ borderRadius: '50%', width: '40px', height: '40px', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img src="https://via.placeholder.com/40" alt="Profile" style={{ borderRadius: '50%' }} />
-            </NavLink>
-          )}
-        </NavLinks>
-      </Navbar>
+    <Router>
+      <AppContainer>
+        <GridBackground />
+        <Navbar isLoggedIn={isLoggedIn} setShowAuth={setShowAuth} username={username} />
 
-      <HeroSection
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <h1>EternaVaultX</h1>
-        <p>
-          Welcome to the future of secure storage. Experience lightning-fast uploads,
-          military-grade encryption, and seamless file sharing in our cutting-edge platform.
-        </p>
-      </HeroSection>
-      <Features />
-      <Subscription />
-      <Footer />
-      <AnimatePresence>
-        {showAuth && (
-          <ModalOverlay
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowAuth(false)}
-          >
-            <div onClick={e => e.stopPropagation()}>
-              <Auth setShowAuth={setShowAuth} setIsLoggedIn={setIsLoggedIn} />
-            </div>
-          </ModalOverlay>
-        )}
-      </AnimatePresence>
-    </AppContainer>
+        <Routes>
+          <Route path="/" element={
+            <>
+              <HeroSection
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <h1>EternaVaultX</h1>
+                <p>
+                  Welcome to the future of secure storage. Experience lightning-fast uploads,
+                  military-grade encryption, and seamless file sharing in our cutting-edge platform.
+                </p>
+              </HeroSection>
+              <Features />
+              <Subscription />
+              <Footer />
+            </>
+          } />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <Dashboard username={username} />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+        <AnimatePresence>
+          {showAuth && (
+            <ModalOverlay
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowAuth(false)}
+            >
+              <div onClick={e => e.stopPropagation()}>
+                <Auth setShowAuth={setShowAuth} onLogin={handleLogin} />
+              </div>
+            </ModalOverlay>
+          )}
+        </AnimatePresence>
+      </AppContainer>
+    </Router>
   );
 }
 
