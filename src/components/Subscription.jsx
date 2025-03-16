@@ -48,33 +48,58 @@ const PlansContainer = styled.div`
 `;
 
 const PlanCard = styled(motion.div)`
-  background: transparent;
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 15px;
   padding: 2rem;
   text-align: center;
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
+  border: 2px solid transparent;
+  box-shadow: 0 0 20px rgba(255, 77, 0, 0.3);
 
-  &::before {
+  &::before,
+  &::after {
     content: '';
     position: absolute;
     top: -2px;
     left: -2px;
     right: -2px;
     bottom: -2px;
-    background: linear-gradient(45deg, #ff4d00, #ff8533);
     border-radius: 15px;
     z-index: -1;
+  }
+
+  &::before {
+    background: linear-gradient(45deg, #ff4d00, transparent, #ff8533);
     opacity: 0.7;
-    transition: opacity 0.3s ease;
-    animation: borderGlow 2s ease-in-out infinite;
+    animation: borderPulse 2s ease-in-out infinite;
+  }
+
+  &::after {
+    background: rgba(0, 0, 0, 0.3);
+    margin: 2px;
+    border-radius: 13px;
   }
 
   &:hover {
     transform: translateY(-5px);
+    box-shadow: 0 0 30px rgba(255, 77, 0, 0.5);
+    
     &::before {
       opacity: 1;
+      animation: borderPulse 1s ease-in-out infinite;
+    }
+  }
+
+  @keyframes borderPulse {
+    0%, 100% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.01);
     }
   }
 `;
