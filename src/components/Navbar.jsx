@@ -173,11 +173,9 @@ const Navbar = ({ isLoggedIn, setShowAuth, username = 'John Doe' }) => {
 
       <NavLinks>
         <NavLink href="/" className={window.location.pathname === '/' ? 'active' : ''}>Home</NavLink>
+        <NavLink href="/dashboard" className={window.location.pathname === '/dashboard' ? 'active' : ''}>Dashboard</NavLink>
         {isLoggedIn && (
-          <>
-            <NavLink href="/dashboard" className={window.location.pathname === '/dashboard' ? 'active' : ''}>Dashboard</NavLink>
-            <NavLink href="/files" className={window.location.pathname === '/files' ? 'active' : ''}>My Files</NavLink>
-          </>
+          <NavLink href="/files" className={window.location.pathname === '/files' ? 'active' : ''}>My Files</NavLink>
         )}
         <NavLink href="/about" className={window.location.pathname === '/about' ? 'active' : ''}>About</NavLink>
         <NavLink href="/pricing" className={window.location.pathname === '/pricing' ? 'active' : ''}>Pricing</NavLink>

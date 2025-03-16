@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -121,14 +121,31 @@ const HeroSection = styled(motion.div)`
 `;
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    const savedAuth = localStorage.getItem('isLoggedIn');
+    return savedAuth === 'true';
+  });
   const [showAuth, setShowAuth] = useState(false);
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(() => {
+    return localStorage.getItem('username') || '';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('isLoggedIn', isLoggedIn);
+    localStorage.setItem('username', username);
+  }, [isLoggedIn, username]);
 
   const handleLogin = (user) => {
     setIsLoggedIn(true);
     setUsername(user.username);
     setShowAuth(false);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUsername('');
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('username');
   };
 
   return (
