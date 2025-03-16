@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import { FaHome, FaFileAlt, FaCog, FaSignOutAlt, FaUpload, FaBars } from 'react-icons/fa';
 
 const DashboardContainer = styled.div`
@@ -191,16 +190,9 @@ const MenuButton = styled.button`
   }
 `;
 
-const Dashboard = ({ username }) => {
+const Dashboard = ({ username, onLogout }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('username');
-    navigate('/');
-  };
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
@@ -237,7 +229,7 @@ const Dashboard = ({ username }) => {
           <FaCog />
           <span>Settings</span>
         </NavItem>
-        <NavItem isCollapsed={isCollapsed} onClick={handleLogout}>
+        <NavItem isCollapsed={isCollapsed} onClick={onLogout}>
           <FaSignOutAlt />
           <span>Logout</span>
         </NavItem>
