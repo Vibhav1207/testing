@@ -1,88 +1,86 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { FiHome, FiFolder, FiBarChart2, FiSettings, FiLogOut, FiMenu, FiUpload, FiFile, FiLock } from 'react-icons/fi';
+import { FaHome, FaFileAlt, FaChartBar, FaCog, FaSignOutAlt, FaUpload, FaBars } from 'react-icons/fa';
 
 const DashboardContainer = styled.div`
   display: flex;
-  height: calc(100vh - 100px);
-  margin: 1rem 2rem;
-  gap: 2rem;
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
   position: relative;
+  overflow: hidden;
 
-  @media (max-width: 768px) {
-    margin: 1rem;
-    flex-direction: column;
-    height: auto;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(rgba(0, 100, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 100, 255, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: 0.5;
+    pointer-events: none;
+    animation: gridFloat 20s linear infinite;
+  }
+
+  @keyframes gridFloat {
+    0% { background-position: 0 0; }
+    100% { background-position: 30px 30px; }
   }
 `;
 
-const Sidebar = styled.div`
+const Sidebar = styled(motion.div)`
+  width: ${props => props.isCollapsed ? '80px' : '250px'};
   background: rgba(0, 0, 0, 0.8);
-  border: 2px solid var(--neon-blue);
-  border-radius: 20px;
-  padding: 2rem;
+  border-right: 1px solid rgba(var(--neon-blue-rgb), 0.3);
+  padding: 2rem 0;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  min-width: ${props => props.collapsed ? '80px' : '250px'};
-  box-shadow: 0 0 20px var(--neon-blue);
-  transition: all 0.3s ease;
-
-  @media (max-width: 768px) {
-    position: fixed;
-    top: 80px;
-    left: ${props => props.collapsed ? '-80px' : '0'};
-    height: 100vh;
-    z-index: 100;
-  }
+  transition: width 0.3s ease;
+  box-shadow: 5px 0 15px rgba(var(--neon-blue-rgb), 0.2);
+  z-index: 2;
 `;
 
-const SidebarLink = styled(motion.a)`
+const NavItem = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 1.1rem;
-  padding: 0.8rem;
-  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  color: var(--text-primary);
+  cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    background: rgba(var(--neon-blue-rgb), 0.1);
+    color: var(--neon-blue);
+  }
 
   svg {
     font-size: 1.5rem;
-    min-width: 24px;
-  }
-
-  &.active {
-    color: var(--text-primary);
-    background: rgba(var(--neon-blue-rgb), 0.1);
-    box-shadow: 0 0 10px var(--neon-blue);
-  }
-
-  &:hover {
-    color: var(--text-primary);
-    transform: translateX(5px);
+    min-width: 1.5rem;
   }
 
   span {
-    display: ${props => props.collapsed ? 'none' : 'block'};
+    margin-left: 1rem;
+    opacity: ${props => props.isCollapsed ? 0 : 1};
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
   }
 `;
 
 const MainContent = styled.div`
   flex: 1;
   padding: 2rem;
-  background: rgba(0, 0, 0, 0.8);
-  border: 2px solid var(--neon-blue);
-  border-radius: 20px;
-  box-shadow: 0 0 20px var(--neon-blue);
-  overflow-y: auto;
+  position: relative;
+  z-index: 1;
 `;
 
-const WelcomeMessage = styled(motion.h1)`
-  color: var(--text-primary);
+const WelcomeText = styled(motion.h1)`
   font-size: 2.5rem;
+  color: var(--text-primary);
   margin-bottom: 2rem;
   text-shadow: 0 0 10px var(--neon-blue);
 
@@ -94,201 +92,69 @@ const WelcomeMessage = styled(motion.h1)`
 const StatsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-bottom: 3rem;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 `;
 
 const StatCard = styled(motion.div)`
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid var(--neon-blue);
+  background: rgba(0, 0, 0, 0.7);
   border-radius: 15px;
   padding: 1.5rem;
-  box-shadow: 0 0 15px rgba(var(--neon-blue-rgb), 0.3);
+  border: 1px solid rgba(var(--neon-blue-rgb), 0.3);
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 0 25px var(--neon-blue);
+    box-shadow: 0 5px 15px rgba(var(--neon-blue-rgb), 0.3);
   }
 
   h3 {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    color: var(--text-primary);
     margin-bottom: 1rem;
   }
 
   p {
-    color: var(--text-primary);
     font-size: 2rem;
-    font-weight: 600;
-    text-shadow: 0 0 5px var(--neon-blue);
+    color: var(--neon-blue);
+    text-shadow: 0 0 10px var(--neon-blue);
   }
 `;
 
 const UploadSection = styled.div`
-  margin-bottom: 3rem;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  padding: 2rem;
+  border: 1px solid rgba(var(--neon-blue-rgb), 0.3);
+  margin-bottom: 2rem;
 `;
 
 const UploadButton = styled(motion.button)`
-  padding: 1rem 2rem;
-  background: transparent;
-  border: 2px solid var(--neon-blue);
-  border-radius: 30px;
-  color: var(--text-primary);
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(var(--neon-blue-rgb), 0.3);
-
-  &:hover {
-    background: var(--neon-blue);
-    box-shadow: 0 0 25px var(--neon-blue);
-  }
-`;
-
-const ActivityTable = styled.div`
-  border: 1px solid var(--neon-blue);
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 0 15px rgba(var(--neon-blue-rgb), 0.3);
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-
-    th, td {
-      padding: 1rem;
-      text-align: left;
-      border-bottom: 1px solid rgba(var(--neon-blue-rgb), 0.2);
-    }
-
-    th {
-      background: rgba(var(--neon-blue-rgb), 0.1);
-      color: var(--text-primary);
-      font-weight: 600;
-    }
-
-    td {
-      color: var(--text-secondary);
-    }
-
-    tr:hover td {
-      color: var(--text-primary);
-      background: rgba(var(--neon-blue-rgb), 0.05);
-    }
-  }
-`;
-
-const MenuButton = styled(motion.button)`
-  display: none;
-  position: fixed;
-  top: 90px;
-  right: 20px;
-  background: rgba(0, 0, 0, 0.8);
-  border: 2px solid var(--neon-blue);
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  z-index: 101;
-  color: var(--text-primary);
-  box-shadow: 0 0 15px var(--neon-blue);
-
-  @media (max-width: 768px) {
-    display: flex;
-  }
-`;
-
-const FileUploadCard = styled(motion.div)`
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid var(--neon-blue);
-  border-radius: 15px;
-  padding: 1.5rem;
-  box-shadow: 0 0 15px rgba(var(--neon-blue-rgb), 0.3);
-
-  h3 {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--text-secondary);
-    margin-bottom: 1rem;
-  }
-
-  input[type="file"] {
-    display: none;
-  }
-
-  input[type="date"] {
-    width: 100%;
-    padding: 0.5rem;
-    margin: 1rem 0;
-    border: 1px solid var(--neon-blue);
-    border-radius: 5px;
-    background: transparent;
-    color: var(--text-primary);
-  }
-`;
-
-const FilePreview = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin: 1rem 0;
-  padding: 0.5rem;
-  background: rgba(var(--neon-blue-rgb), 0.1);
-  border-radius: 5px;
-  color: var(--text-secondary);
-`;
-
-const StorageCard = styled(motion.div)`
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid var(--neon-blue);
-  border-radius: 15px;
-  padding: 1.5rem;
-  box-shadow: 0 0 15px rgba(var(--neon-blue-rgb), 0.3);
-
-  h3 {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-  }
-
-  p {
-    color: var(--text-primary);
-    font-size: 2rem;
-    font-weight: 600;
-    text-shadow: 0 0 5px var(--neon-blue);
-  }
-`;
-
-const UploadSection = styled.div`
-  margin-bottom: 3rem;
-`;
-
-const UploadButton = styled(motion.button)`
-  padding: 1rem 2rem;
+  padding: 0.8rem 1.5rem;
   background: transparent;
   border: 2px solid var(--neon-blue);
   border-radius: 30px;
   color: var(--text-primary);
-  font-size: 1.1rem;
+  font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(var(--neon-blue-rgb), 0.3);
 
   &:hover {
     background: var(--neon-blue);
-    box-shadow: 0 0 25px var(--neon-blue);
+    box-shadow: 0 0 20px rgba(var(--neon-blue-rgb), 0.5);
   }
 `;
 
 const ActivityTable = styled.div`
-  border: 1px solid var(--neon-blue);
+  background: rgba(0, 0, 0, 0.7);
   border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 0 15px rgba(var(--neon-blue-rgb), 0.3);
+  padding: 2rem;
+  border: 1px solid rgba(var(--neon-blue-rgb), 0.3);
 
   table {
     width: 100%;
@@ -297,241 +163,151 @@ const ActivityTable = styled.div`
     th, td {
       padding: 1rem;
       text-align: left;
-      border-bottom: 1px solid rgba(var(--neon-blue-rgb), 0.2);
+      color: var(--text-primary);
+      border-bottom: 1px solid rgba(var(--neon-blue-rgb), 0.3);
     }
 
     th {
-      background: rgba(var(--neon-blue-rgb), 0.1);
-      color: var(--text-primary);
-      font-weight: 600;
-    }
-
-    td {
-      color: var(--text-secondary);
-    }
-
-    tr:hover td {
-      color: var(--text-primary);
-      background: rgba(var(--neon-blue-rgb), 0.05);
+      color: var(--neon-blue);
     }
   }
 `;
 
-const MenuButton = styled(motion.button)`
+const MenuButton = styled.button`
   display: none;
   position: fixed;
-  top: 90px;
-  right: 20px;
-  background: rgba(0, 0, 0, 0.8);
-  border: 2px solid var(--neon-blue);
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  z-index: 101;
+  top: 1rem;
+  left: 1rem;
+  z-index: 3;
+  background: transparent;
+  border: none;
   color: var(--text-primary);
-  box-shadow: 0 0 15px var(--neon-blue);
+  font-size: 1.5rem;
+  cursor: pointer;
 
   @media (max-width: 768px) {
-    display: flex;
+    display: block;
   }
 `;
 
-const Dashboard = ({ username }) => {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [unlockDate, setUnlockDate] = useState('');
-  
-  // Mock data
-  const storageUsed = 2.4;
-  const storageLimit = 10;
-  const currentPlan = 'Premium';
+const Dashboard = ({ username, onLogout }) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const handleFileSelect = (event) => {
-    setSelectedFile(event.target.files[0]);
+  const toggleSidebar = () => {
+    setIsCollapsed(!isCollapsed);
   };
 
-  const handleUpload = () => {
-    // Implement file upload logic here
-    console.log('Uploading file:', selectedFile);
-    console.log('Unlock date:', unlockDate);
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-
-  const dummyStats = [
-    { title: 'Total Files', value: '128' },
-    { title: 'Storage Used', value: '2.4 GB' },
-    { title: 'Recent Activity', value: '24' },
-    { title: 'Shared Files', value: '15' }
-  ];
-
-  const dummyActivity = [
-    { action: 'File Upload', file: 'project_report.pdf', time: '2 hours ago' },
-    { action: 'File Share', file: 'meeting_notes.doc', time: '5 hours ago' },
-    { action: 'File Delete', file: 'old_backup.zip', time: '1 day ago' },
-  ];
 
   return (
     <DashboardContainer>
-      <Sidebar collapsed={sidebarCollapsed}>
-        <SidebarLink href="#" className="active" collapsed={sidebarCollapsed}>
-          <FiHome />
-          <span>Dashboard</span>
-        </SidebarLink>
-        <SidebarLink href="#" collapsed={sidebarCollapsed}>
-          <FiFolder />
-          <span>My Files</span>
-        </SidebarLink>
-        <SidebarLink href="#" collapsed={sidebarCollapsed}>
-          <FiBarChart2 />
-          <span>Analytics</span>
-        </SidebarLink>
-        <SidebarLink href="#" collapsed={sidebarCollapsed}>
-          <FiSettings />
-          <span>Settings</span>
-        </SidebarLink>
-        <SidebarLink href="#" collapsed={sidebarCollapsed}>
-          <FiLogOut />
-          <span>Logout</span>
-        </SidebarLink>
-      </Sidebar>
-
-      <MenuButton
-        onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      >
-        <FiMenu size={24} />
+      <MenuButton onClick={toggleMobileMenu}>
+        <FaBars />
       </MenuButton>
 
+      <Sidebar
+        isCollapsed={isCollapsed}
+        initial={false}
+        animate={{
+          width: isMobileMenuOpen ? '250px' : (isCollapsed ? '80px' : '250px'),
+          x: isMobileMenuOpen ? 0 : (window.innerWidth <= 768 ? '-100%' : 0)
+        }}
+      >
+        <NavItem isCollapsed={isCollapsed}>
+          <FaHome />
+          <span>Dashboard</span>
+        </NavItem>
+        <NavItem isCollapsed={isCollapsed}>
+          <FaFileAlt />
+          <span>My Files</span>
+        </NavItem>
+        <NavItem isCollapsed={isCollapsed}>
+          <FaChartBar />
+          <span>Analytics</span>
+        </NavItem>
+        <NavItem isCollapsed={isCollapsed}>
+          <FaCog />
+          <span>Settings</span>
+        </NavItem>
+        <NavItem isCollapsed={isCollapsed} onClick={onLogout}>
+          <FaSignOutAlt />
+          <span>Logout</span>
+        </NavItem>
+      </Sidebar>
+
       <MainContent>
-        <WelcomeMessage
+        <WelcomeText
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           Welcome back, {username}!
-        </WelcomeMessage>
+        </WelcomeText>
 
         <StatsGrid>
-          <FileUploadCard
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+          <StatCard
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: 'spring', stiffness: 300 }}
           >
-            <h3><FiUpload /> File Upload & Encryption</h3>
-            <input
-              type="file"
-              id="file-upload"
-              accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-              onChange={handleFileSelect}
-            />
-            <UploadButton
-              as="label"
-              htmlFor="file-upload"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <FiFile /> Choose File
-            </UploadButton>
-            {selectedFile && (
-              <FilePreview>
-                <FiFile />
-                <span>{selectedFile.name}</span>
-              </FilePreview>
-            )}
-            <input
-              type="date"
-              value={unlockDate}
-              onChange={(e) => setUnlockDate(e.target.value)}
-              min={new Date().toISOString().split('T')[0]}
-            />
-            <UploadButton
-              onClick={handleUpload}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              disabled={!selectedFile || !unlockDate}
-            >
-              <FiUpload /> Upload & Encrypt
-            </UploadButton>
-          </FileUploadCard>
-
-          <StorageCard
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            <h3>Total Files</h3>
+            <p>42</p>
+          </StatCard>
+          <StatCard
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: 'spring', stiffness: 300 }}
           >
-            <h3><FiBarChart2 /> Storage Overview</h3>
-            <StorageBar>
-              <div style={{ width: `${(storageUsed / storageLimit) * 100}%` }} />
-            </StorageBar>
-            <p>{storageUsed}GB / {storageLimit}GB Used</p>
-          </StorageCard>
-
-          <SubscriptionCard
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            <h3>Storage Used</h3>
+            <p>2.1 GB</p>
+          </StatCard>
+          <StatCard
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: 'spring', stiffness: 300 }}
           >
-            <h3><FiSettings /> Subscription Plan</h3>
-            <p>Current Plan: {currentPlan}</p>
-            <p>Storage Limit: {storageLimit}GB</p>
-          </SubscriptionCard>
+            <h3>Recent Activity</h3>
+            <p>12</p>
+          </StatCard>
         </StatsGrid>
 
-        <ActivityTable
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <h3><FiFolder /> Recent Activity</h3>
+        <UploadSection>
+          <UploadButton
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <FaUpload /> Upload Files
+          </UploadButton>
+        </UploadSection>
+
+        <ActivityTable>
+          <h2 style={{ color: 'var(--text-primary)', marginBottom: '1rem' }}>
+            Recent Activity
+          </h2>
           <table>
             <thead>
               <tr>
+                <th>File Name</th>
                 <th>Action</th>
-                <th>File</th>
-                <th>Time</th>
-                <th>Unlock Time</th>
+                <th>Date</th>
               </tr>
             </thead>
             <tbody>
-              {dummyActivity.map((activity, index) => (
-                <tr key={index}>
-                  <td>{activity.action}</td>
-                  <td>{activity.file}</td>
-                  <td>{activity.time}</td>
-                  <td>
-                    <UnlockTime>
-                      <FiLock /> {activity.unlockTime || 'N/A'}
-                    </UnlockTime>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </ActivityTable
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <h3><FiFolder /> Recent Activity</h3>>
-          <table>
-            <thead>
               <tr>
-                <th>Action</th>
-                <th>File</th>
-                <th>Time</th>
+                <td>document.pdf</td>
+                <td>Uploaded</td>
+                <td>2023-10-15</td>
               </tr>
-            </thead>
-            <tbody>
-              {dummyActivity.map((activity, index) => (
-                <tr key={index}>
-                  <td>{activity.action}</td>
-                  <td>{activity.file}</td>
-                  <td>{activity.time}</td>
-                </tr>
-              ))}
+              <tr>
+                <td>image.jpg</td>
+                <td>Modified</td>
+                <td>2023-10-14</td>
+              </tr>
+              <tr>
+                <td>data.xlsx</td>
+                <td>Shared</td>
+                <td>2023-10-13</td>
+              </tr>
             </tbody>
           </table>
         </ActivityTable>
