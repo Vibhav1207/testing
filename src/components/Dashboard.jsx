@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { FaHome, FaFileAlt, FaCog, FaSignOutAlt, FaUpload, FaBars } from 'react-icons/fa';
+import { FaHome, FaFileAlt, FaCog, FaSignOutAlt, FaUpload, FaBars, FaUser, FaLock, FaFilePdf, FaFileImage, FaFileExcel } from 'react-icons/fa';
 
 const DashboardContainer = styled.div`
   display: flex;
@@ -190,9 +190,91 @@ const MenuButton = styled.button`
   }
 `;
 
+const FileInput = styled.input`
+  display: none;
+`;
+
+const DateInput = styled.input`
+  width: 100%;
+  padding: 0.8rem;
+  margin: 1rem 0;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--neon-blue);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 1rem;
+
+  &::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+`;
+
+const FileTypeIcon = styled.div`
+  font-size: 1.5rem;
+  color: var(--neon-blue);
+`;
+
+const UnlockTime = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--neon-blue);
+`;
+
+const ProgressBar = styled.div`
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  margin-top: 1rem;
+  overflow: hidden;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: ${props => props.progress}%;
+    background: var(--neon-blue);
+    box-shadow: 0 0 10px var(--neon-blue);
+  }
+`;
+
 const Dashboard = ({ username, onLogout }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [unlockDate, setUnlockDate] = useState('');
+  const [storageUsed] = useState(5.2);
+  const [storageLimit] = useState(10);
+  const [currentPlan] = useState('Premium');
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleUpload = () => {
+    // Implement file upload logic here
+    console.log('Uploading file:', selectedFile);
+    console.log('Unlock date:', unlockDate);
+  };
+
+  const getFileIcon = (fileType) => {
+    switch (fileType) {
+      case 'pdf':
+        return <FaFilePdf />;
+      case 'jpg':
+      case 'jpeg':
+      case 'png':
+        return <FaFileImage />;
+      case 'xlsx':
+        return <FaFileExcel />;
+      default:
+        return <FaFileAlt />;
+    }
+  };
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
