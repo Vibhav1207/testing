@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import Features from './components/Features';
 import Navbar from './components/Navbar';
+import Subscription from './components/Subscription';
+import Footer from './components/Footer';
 
 // Styled components
 const AppContainer = styled.div`
@@ -45,13 +47,13 @@ const Logo = styled.div`
 
 const NavLinks = styled.div`
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   align-items: center;
 
   @media (max-width: 768px) {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1rem;
+    gap: 0.5rem;
     margin-top: 1rem;
   }
 `;
@@ -139,6 +141,8 @@ function App() {
         </p>
       </HeroSection>
       <Features />
+      <Subscription />
+      <Footer />
     </AppContainer>
   );
 }
