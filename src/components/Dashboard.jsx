@@ -38,9 +38,16 @@ const Sidebar = styled(motion.div)`
   padding: 2rem 0;
   display: flex;
   flex-direction: column;
-  transition: width 0.3s ease;
+  transition: all 0.3s ease;
   box-shadow: 5px 0 15px rgba(var(--neon-blue-rgb), 0.2);
   z-index: 2;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    height: 100vh;
+    width: 250px;
+    transform: translateX(${props => props.isMobileMenuOpen ? '0' : '-100%'});
+  }
 `;
 
 const NavItem = styled.div`
@@ -76,6 +83,11 @@ const MainContent = styled.div`
   padding: 2rem;
   position: relative;
   z-index: 1;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    margin-top: 3rem;
+  }
 `;
 
 const WelcomeText = styled(motion.h1)`
@@ -94,6 +106,11 @@ const StatsGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
   margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
 
 const StatCard = styled(motion.div)`
@@ -179,11 +196,19 @@ const MenuButton = styled.button`
   top: 1rem;
   left: 1rem;
   z-index: 3;
-  background: transparent;
-  border: none;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(var(--neon-blue-rgb), 0.3);
+  border-radius: 8px;
+  padding: 0.5rem;
   color: var(--text-primary);
   font-size: 1.5rem;
   cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(var(--neon-blue-rgb), 0.1);
+    color: var(--neon-blue);
+  }
 
   @media (max-width: 768px) {
     display: block;
@@ -292,10 +317,10 @@ const Dashboard = ({ username, onLogout }) => {
 
       <Sidebar
         isCollapsed={isCollapsed}
+        isMobileMenuOpen={isMobileMenuOpen}
         initial={false}
         animate={{
-          width: isMobileMenuOpen ? '250px' : (isCollapsed ? '80px' : '250px'),
-          x: isMobileMenuOpen ? 0 : (window.innerWidth <= 768 ? '-100%' : 0)
+          width: isCollapsed && !isMobileMenuOpen ? '80px' : '250px'
         }}
       >
         <NavItem isCollapsed={isCollapsed} isActive={true}>
