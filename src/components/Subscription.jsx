@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const SubscriptionSection = styled.section`
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, rgba(0, 20, 40, 0.9), rgba(0, 40, 80, 0.9));
+  background: rgba(0, 20, 40, 0.9);
   position: relative;
   overflow: hidden;
 
