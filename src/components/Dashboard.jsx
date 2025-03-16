@@ -260,29 +260,107 @@ const Dashboard = ({ username }) => {
         </WelcomeMessage>
 
         <StatsGrid>
-          {dummyStats.map((stat, index) => (
-            <StatCard
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+          <FileUploadCard
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3><FiUpload /> File Upload & Encryption</h3>
+            <input
+              type="file"
+              id="file-upload"
+              accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+              onChange={handleFileSelect}
+            />
+            <UploadButton
+              as="label"
+              htmlFor="file-upload"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <h3>{stat.title}</h3>
-              <p>{stat.value}</p>
-            </StatCard>
-          ))}
+              <FiFile /> Choose File
+            </UploadButton>
+            {selectedFile && (
+              <FilePreview>
+                <FiFile />
+                <span>{selectedFile.name}</span>
+              </FilePreview>
+            )}
+            <input
+              type="date"
+              value={unlockDate}
+              onChange={(e) => setUnlockDate(e.target.value)}
+              min={new Date().toISOString().split('T')[0]}
+            />
+            <UploadButton
+              onClick={handleUpload}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              disabled={!selectedFile || !unlockDate}
+            >
+              <FiUpload /> Upload & Encrypt
+            </UploadButton>
+          </FileUploadCard>
+
+          <StorageCard
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <h3><FiBarChart2 /> Storage Overview</h3>
+            <StorageBar>
+              <div style={{ width: `${(storageUsed / storageLimit) * 100}%` }} />
+            </StorageBar>
+            <p>{storageUsed}GB / {storageLimit}GB Used</p>
+          </StorageCard>
+
+          <SubscriptionCard
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <h3><FiSettings /> Subscription Plan</h3>
+            <p>Current Plan: {currentPlan}</p>
+            <p>Storage Limit: {storageLimit}GB</p>
+          </SubscriptionCard>
         </StatsGrid>
 
-        <UploadSection>
-          <UploadButton
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Upload New File
-          </UploadButton>
-        </UploadSection>
-
-        <ActivityTable>
+        <ActivityTable
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <h3><FiFolder /> Recent Activity</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>File</th>
+                <th>Time</th>
+                <th>Unlock Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dummyActivity.map((activity, index) => (
+                <tr key={index}>
+                  <td>{activity.action}</td>
+                  <td>{activity.file}</td>
+                  <td>{activity.time}</td>
+                  <td>
+                    <UnlockTime>
+                      <FiLock /> {activity.unlockTime}
+                    </UnlockTime>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </ActivityTable
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <h3><FiFolder /> Recent Activity</h3>>
           <table>
             <thead>
               <tr>
