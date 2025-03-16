@@ -151,6 +151,10 @@ const Navbar = ({ isLoggedIn, setShowAuth }) => {
     window.location.href = '/';
   };
 
+  const handleAuthClick = () => {
+    setShowAuth(true);
+  };
+
   return (
     <NavContainer>
       <Logo>
@@ -186,8 +190,8 @@ const Navbar = ({ isLoggedIn, setShowAuth }) => {
         </ProfileSection>
       ) : (
         <AuthSection>
-          <AuthButton onClick={() => setShowAuth(true)}>Login</AuthButton>
-          <AuthButton onClick={() => setShowAuth(true)}>Signup</AuthButton>
+          <AuthButton onClick={handleAuthClick}>Login</AuthButton>
+          <AuthButton onClick={handleAuthClick}>Signup</AuthButton>
         </AuthSection>
       )}
     </NavContainer>

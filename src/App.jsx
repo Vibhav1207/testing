@@ -1,11 +1,25 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Features from './components/Features';
 import Navbar from './components/Navbar';
 import Subscription from './components/Subscription';
 import Footer from './components/Footer';
 import Auth from './components/Auth';
+
+const ModalOverlay = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
 
 // Styled components
 const AppContainer = styled.div`
@@ -104,12 +118,13 @@ const HeroSection = styled(motion.div)`
 `;
 
 function App() {
-  const [isLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
 
   return (
     <AppContainer>
       <GridBackground />
-      <Navbar>
+      <Navbar isLoggedIn={isLoggedIn} setShowAuth={setShowAuth}>
         <Logo>EternaVaultX</Logo>
         <NavLinks>
           <NavLink href="#" className="active">Home</NavLink>
@@ -144,6 +159,20 @@ function App() {
       <Features />
       <Subscription />
       <Footer />
+      <AnimatePresence>
+        {showAuth && (
+          <ModalOverlay
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowAuth(false)}
+          >
+            <div onClick={e => e.stopPropagation()}>
+              <Auth setShowAuth={setShowAuth} setIsLoggedIn={setIsLoggedIn} />
+            </div>
+          </ModalOverlay>
+        )}
+      </AnimatePresence>
     </AppContainer>
   );
 }
