@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import Features from './components/Features';
+import Navbar from './components/Navbar';
 
 // Styled components
 const AppContainer = styled.div`
@@ -35,19 +36,49 @@ const GridBackground = styled.div`
   opacity: 0.5;
 `;
 
-const Navbar = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(0, 100, 255, 0.3);
-  border-radius: 50px;
-  margin: 1rem 2rem;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 20px rgba(0, 100, 255, 0.2);
+// App container styles
+const AppContainer = styled.div`
+  min-height: 100vh;
+  background-color: #000;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
 
-  @media (max-width: 768px) {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(0, 100, 255, 0.1), transparent);
+    pointer-events: none;
+  }
+`;
+
+const GridBackground = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(rgba(0, 100, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 100, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.5;
+`;
+
+function App() {
+  return (
+    <AppContainer>
+      <GridBackground />
+      <Navbar />
+      <Features />
+    </AppContainer>
+  );
+}
+
+export default App;
     flex-direction: column;
     border-radius: 25px;
     margin: 0.5rem;
