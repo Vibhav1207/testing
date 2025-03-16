@@ -144,9 +144,12 @@ const DropdownItem = styled.a`
   }
 `;
 
-const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const Navbar = ({ isLoggedIn, setShowAuth }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleLogout = () => {
+    window.location.href = '/';
+  };
 
   return (
     <NavContainer>
@@ -177,13 +180,14 @@ const Navbar = () => {
               exit={{ opacity: 0, y: -10 }}
             >
               <DropdownItem href="#">Settings</DropdownItem>
+              <DropdownItem href="#" onClick={handleLogout}>Logout</DropdownItem>
             </Dropdown>
           )}
         </ProfileSection>
       ) : (
         <AuthSection>
-          <AuthButton>Login</AuthButton>
-          <AuthButton>Signup</AuthButton>
+          <AuthButton onClick={() => setShowAuth(true)}>Login</AuthButton>
+          <AuthButton onClick={() => setShowAuth(true)}>Signup</AuthButton>
         </AuthSection>
       )}
     </NavContainer>

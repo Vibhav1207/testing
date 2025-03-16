@@ -5,6 +5,7 @@ import Features from './components/Features';
 import Navbar from './components/Navbar';
 import Subscription from './components/Subscription';
 import Footer from './components/Footer';
+import Auth from './components/Auth';
 
 // Styled components
 const AppContainer = styled.div`
