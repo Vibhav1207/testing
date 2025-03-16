@@ -216,7 +216,7 @@ const Dashboard = ({ username, onLogout }) => {
           x: isMobileMenuOpen ? 0 : (window.innerWidth <= 768 ? '-100%' : 0)
         }}
       >
-        <NavItem isCollapsed={isCollapsed}>
+        <NavItem isCollapsed={isCollapsed} isActive={true}>
           <FaHome />
           <span>Dashboard</span>
         </NavItem>
@@ -224,7 +224,10 @@ const Dashboard = ({ username, onLogout }) => {
           <FaFileAlt />
           <span>My Files</span>
         </NavItem>
-
+        <NavItem isCollapsed={isCollapsed}>
+          <FaUser />
+          <span>Profile</span>
+        </NavItem>
         <NavItem isCollapsed={isCollapsed}>
           <FaCog />
           <span>Settings</span>
@@ -249,61 +252,124 @@ const Dashboard = ({ username, onLogout }) => {
             whileHover={{ scale: 1.02 }}
             transition={{ type: 'spring', stiffness: 300 }}
           >
-            <h3>Total Files</h3>
-            <p>42</p>
+            <h3>Storage Overview</h3>
+            <p>{storageUsed.toFixed(1)} GB / {storageLimit} GB</p>
+            <ProgressBar progress={(storageUsed / storageLimit) * 100} />
           </StatCard>
           <StatCard
             whileHover={{ scale: 1.02 }}
             transition={{ type: 'spring', stiffness: 300 }}
           >
-            <h3>Storage Used</h3>
-            <p>2.1 GB</p>
+            <h3>Current Plan</h3>
+            <p>{currentPlan}</p>
           </StatCard>
           <StatCard
             whileHover={{ scale: 1.02 }}
             transition={{ type: 'spring', stiffness: 300 }}
           >
             <h3>Recent Activity</h3>
-            <p>12</p>
+            <p>12 Files</p>
           </StatCard>
         </StatsGrid>
 
-        <UploadSection>
+        <UploadSection
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <h2 style={{ color: 'var(--text-primary)', marginBottom: '1.5rem' }}>
+            File Upload & Encryption
+          </h2>
+          <FileInput
+            type="file"
+            id="file-upload"
+            accept=".pdf,.jpg,.jpeg,.png"
+            onChange={handleFileChange}
+          />
           <UploadButton
+            as="label"
+            htmlFor="file-upload"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            marginBottom
           >
-            <FaUpload /> Upload Files
+            <FaUpload /> Choose File
+          </UploadButton>
+          {selectedFile && (
+            <p style={{ color: 'var(--text-primary)', marginBottom: '1rem' }}>
+              Selected: {selectedFile.name}
+            </p>
+          )}
+          <DateInput
+            type="datetime-local"
+            value={unlockDate}
+            onChange={(e) => setUnlockDate(e.target.value)}
+            placeholder="Select Unlock Date"
+          />
+          <UploadButton
+            onClick={handleUpload}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            style={{ marginTop: '1rem' }}
+            disabled={!selectedFile || !unlockDate}
+          >
+            <FaLock /> Upload & Encrypt
           </UploadButton>
         </UploadSection>
 
-        <ActivityTable>
-          <h2 style={{ color: 'var(--text-primary)', marginBottom: '1rem' }}>
+        <ActivityTable
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <h2 style={{ color: 'var(--text-primary)', marginBottom: '1.5rem' }}>
             Recent Activity
           </h2>
           <table>
             <thead>
               <tr>
+                <th>Type</th>
                 <th>File Name</th>
-                <th>Action</th>
-                <th>Date</th>
+                <th>Date Uploaded</th>
+                <th>Unlock Time</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td>
+                  <FileTypeIcon>{getFileIcon('pdf')}</FileTypeIcon>
+                </td>
                 <td>document.pdf</td>
-                <td>Uploaded</td>
                 <td>2023-10-15</td>
+                <td>
+                  <UnlockTime>
+                    <FaLock /> 2 days remaining
+                  </UnlockTime>
+                </td>
               </tr>
               <tr>
+                <td>
+                  <FileTypeIcon>{getFileIcon('jpg')}</FileTypeIcon>
+                </td>
                 <td>image.jpg</td>
-                <td>Modified</td>
                 <td>2023-10-14</td>
+                <td>
+                  <UnlockTime>
+                    <FaLock /> 5 days remaining
+                  </UnlockTime>
+                </td>
               </tr>
               <tr>
+                <td>
+                  <FileTypeIcon>{getFileIcon('xlsx')}</FileTypeIcon>
+                </td>
                 <td>data.xlsx</td>
-                <td>Shared</td>
                 <td>2023-10-13</td>
+                <td>
+                  <UnlockTime>
+                    <FaLock /> 1 week remaining
+                  </UnlockTime>
+                </td>
               </tr>
             </tbody>
           </table>
